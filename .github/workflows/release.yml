@@ -1,0 +1,37 @@
+on:
+  workflow_dispatch:
+
+env:
+  package_name: github-actions-flake8
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build Release
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --release
+
+      - name: Compress
+        run: tar -czvf "${{ env.package_name }}.linux-x64.tar.gz" -C target/release "${{ env.package_name }}"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.package_name }}
+          path: ${{ env.package_name }}.linux-x64.tar.gz
+
+      - name: Determine Version
+        id: package_version
+        run: echo "::set-output name=value::`cargo metadata --offline --format-version 1 --no-deps | jq -r '.packages[] | select(.name == "${{ env.package_name }}") | .version'`"
+
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: v${{ steps.package_version.outputs.value }}
+          name: Release v${{ steps.package_version.outputs.value }}
