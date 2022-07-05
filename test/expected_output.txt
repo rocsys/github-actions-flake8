@@ -1,0 +1,2 @@
+./hello.py:2:1: F401 'sys' imported but unused
+::warning file=./hello.py,line=2,col=1::F401 'sys' imported but unused
