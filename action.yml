@@ -1,0 +1,7 @@
+name: 'flake8'
+description: 'Emits Github Action warnings for flake8 lints.'
+inputs:
+outputs:
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
