@@ -75,7 +75,11 @@ struct Statistics {
 }
 
 impl Options {
-    fn rewrite<R: BufRead, W: Write>(&self, reader: R, mut writer: W) -> std::io::Result<Statistics> {
+    fn rewrite<R: BufRead, W: Write>(
+        &self,
+        reader: R,
+        mut writer: W,
+    ) -> std::io::Result<Statistics> {
         let mut rewriter = Rewriter::default();
         let mut statistics = Statistics::default();
 
