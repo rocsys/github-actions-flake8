@@ -1,6 +1,6 @@
 # flake8 Github Action
 
-This action emits Github Action `::warning` instructions for `flake8` output.
+This action emits Github Action instructions for `flake8` output.
 
 ## Inputs
 
